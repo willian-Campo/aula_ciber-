@@ -4,7 +4,34 @@ const { db } = require("./start_sqllite");
 
 const app = express();
 
-const comentarios = ["Ihaaaa", "Teste", "Final"];
+const coletarRegistros = () => {
+  const query = "SELECT registro FROM bi";
+  const linhas = db.prepare(query).all();
+
+  return linhas.map((linha) => linha.registro);
+};
+
+const adicionarRegistro = (registro) => {
+  const stmt1 = db.prepare("INSERT INTO bi (registro) VALUES (?)");
+  stmt1.run(registro);
+};
+
+const processarRegistros = () => {
+  const queryReg = "SELECT registro FROM bi";
+  const linhaReg = db.prepare(queryReg).all();
+
+  let palavras = [];
+  for (const linha of linhaReg) {
+    palavras = palavras.concat(linha.registro.split(" "));
+  }
+
+  const query = `SELECT coluna01 FROM tb01 where lower(coluna01) in(${palavras.map(
+    (palavra) => `'${palavra.toLowerCase()}'`
+  )})`;
+  const linhas = db.prepare(query).all();
+
+  return linhas.map((linha) => linha.coluna01);
+};
 
 const adicionarFormulario = (html) => {
   html += "<h1>Formulário</h1>";
@@ -16,47 +43,31 @@ const adicionarFormulario = (html) => {
   return html;
 };
 
-const adicionarListagemComentarios = (html) => {
+const adicionarListagemRegistro = (html) => {
   html += "<h2>Listagem</h2>";
   html += "<ul>";
-  for (const comment of comentarios) {
-    html += `<li>${comment}</li>`;
+  for (const registro of coletarRegistros()) {
+    html += `<li>${registro}</li>`;
   }
   html += "</ul>";
   return html;
 };
 
-const criarConsulta = () => {
-  let query =
-    "SELECT coluna01, coluna02 FROM tb01 WHERE (coluna01 like '%1' or coluna01 like '%2')";
-
-  return query;
+const adicionarListagemProcessamento = (html) => {
+  html += "<h2>Listagem processada</h2>";
+  html += "<ul>";
+  for (const registro of processarRegistros()) {
+    html += `<li>${registro}</li>`;
+  }
+  html += "</ul>";
+  return html;
 };
 
 app.get("/sql_inj_2", (req, res) => {
-
   let html = "";
   html = adicionarFormulario(html);
-  html = adicionarListagemComentarios(html);
-
-  const query = criarConsulta();
-
-  html += "<h2>Consulta</h2>";
-  html += `<p>${query}</p>`;
-
-  try {
-    const linhas = db.prepare(query).all();
-
-    html += "<h2>Listagem</h2>";
-    html += "<table>";
-    for (const row of linhas) {
-      html += `<tr><td>${row.coluna01}</td><td>${row.coluna02}</td></tr>`;
-    }
-    html += "</table>";
-  } catch (ex) {
-    html += "<h2>Erro</h2>";
-    html += `<p>${JSON.stringify(ex)}</p>`;
-  }
+  html = adicionarListagemRegistro(html);
+  html = adicionarListagemProcessamento(html);
 
   res.send(html);
 });
@@ -64,7 +75,7 @@ app.get("/sql_inj_2", (req, res) => {
 app.post("/sql_inj_2form", (req, res) => {
   const comentario = req.body.comentario;
   const sanitizedComment = sanitizeHtml(comentario);
-  comentarios.push(sanitizedComment);
+  adicionarRegistro(sanitizedComment);
 
   res.redirect("sql_inj_2");
 });

@@ -1,9 +1,12 @@
 {
+  "scripts": {
+    "start": "nodemon index.js"
+  },
   "dependencies": {
     "better-sqlite3": "^11.8.1",
     "body-parser": "^2.2.0",
     "express": "^5.1.0",
-    "sanitize-html": "^2.15.0",
-    "sqlite3": "^5.1.7"
+    "nodemon": "^3.1.9",
+    "sanitize-html": "^2.15.0"
   }
 }

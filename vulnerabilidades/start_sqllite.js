@@ -29,6 +29,7 @@ const registroTable02 = [
 // Cria as tabelas
 db.prepare("CREATE TABLE tb01 (coluna01 TEXT, coluna02 TEXT)").run();
 db.prepare("CREATE TABLE tb02 (coluna01 TEXT, coluna02 TEXT)").run();
+db.prepare("CREATE TABLE bi (registro TEXT)").run();
 
 // Insere na tabela 01
 const stmt1 = db.prepare("INSERT INTO tb01 VALUES (?, ?)");
