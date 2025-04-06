@@ -10,6 +10,8 @@ const sql_injection = require("./sql_injection");
 const sql_injection_protecao = require("./sql_injection_protecao");
 const sql_injection_armazenado = require("./sql_injection_armazenado");
 const xxe = require("./xxe");
+const command_injection = require("./command_injection");
+const path_traversal_armazenado = require("./path_traversal_armazenado");
 
 const app = express();
 app.use(bodyParser.urlencoded());
@@ -26,8 +28,15 @@ app.use(sql_injection);
 app.use(sql_injection_protecao);
 app.use(sql_injection_armazenado);
 
+// Command Injection
+app.use(command_injection);
+
 // XXE
 app.use(xxe);
+
+// Path Traversal
+app.use(path_traversal_armazenado);
+
 
 const PORT = 8080;
 app.listen(PORT);

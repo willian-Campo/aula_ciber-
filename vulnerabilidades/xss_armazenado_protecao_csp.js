@@ -32,7 +32,7 @@ app.post("/xss_222form", (req, res) => {
   const comentario = req.body.comentario;
   const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
 
-  comentarios.push(`IP:${ip} Comentario: ${comentario}`);
+  comentarios.push(`IP:${ip} Comentário: ${comentario}`);
 
   res.redirect("xss_222");
 });

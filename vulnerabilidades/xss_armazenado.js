@@ -24,7 +24,9 @@ app.get("/xss_2", (req, res) => {
 
 app.post("/xss_2form", (req, res) => {
   const comentario = req.body.comentario;
-  comentarios.push(comentario);
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+
+  comentarios.push(`IP:${ip} Comentário: ${comentario}`);
 
   res.redirect("xss_2");
 });
