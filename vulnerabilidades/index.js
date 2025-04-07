@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const fileUpload = require('express-fileupload');
 
 const xss_refletido = require("./xss_refletido");
 const xss_refletido_protecao = require("./xss_refletido_protecao");
@@ -15,6 +16,7 @@ const path_traversal_armazenado = require("./path_traversal_armazenado");
 
 const app = express();
 app.use(bodyParser.urlencoded());
+app.use(fileUpload());
 
 // XSS
 app.use(xss_refletido);
