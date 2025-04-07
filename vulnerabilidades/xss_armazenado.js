@@ -12,7 +12,8 @@ app.get("/xss_2", (req, res) => {
   html += "<input type='submit' />";
   html += "</form>\n";
 
-  html += "<h2>Listagem</h2>";
+  html += "<h2 id='titulo'>Listagem</h2>";
+  html += "<p id='paragrafo'>Listagem de comentarios</p>";
   html += "<ul>";
   for (const comment of comentarios) {
     html += `<li>${comment}</li>`;
