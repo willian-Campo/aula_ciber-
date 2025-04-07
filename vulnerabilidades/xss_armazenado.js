@@ -7,7 +7,7 @@ app.get("/xss_2", (req, res) => {
 
   html += "<h1>Formulário</h1>";
   html += "<form action='xss_2form' method='post'>";
-  html += "<textarea name='comentario' rows='10' cols='300'></textarea>";
+  html += "<textarea name='comentario' rows='10' cols='250'></textarea>";
   html += "<br/>";
   html += "<input type='submit' />";
   html += "</form>\n";
