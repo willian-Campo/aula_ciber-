@@ -4,13 +4,16 @@ const { db } = require("./start_sqllite");
 
 const app = express();
 
+const tentativas = [];
 const criarConsulta = (coluna01, coluna02) => {
   let query =
     "SELECT coluna01, coluna02 FROM tb01 WHERE (coluna01 like '%1' or coluna01 like '%2')";
   if (coluna01) {
+    tentativas.push(coluna01);
     query += ` AND coluna01 like '%${coluna01}%'`;
   }
   if (coluna02) {
+    tentativas.push(coluna02);
     query += ` AND coluna02 like '%${coluna02}%'`;
   }
   return query;
@@ -48,6 +51,13 @@ app.get("/sql_inj_1", (req, res) => {
     html += "<h2>Erro</h2>";
     html += `<p>${JSON.stringify(ex)}</p>`;
   }
+
+  html += "<h2 id='titulo'>Tentativas</h2>";
+  html += "<ul>";
+  for (const tentativa of tentativas) {
+    html += `<li>${tentativa}</li>`;
+  }
+  html += "</ul>";
 
   res.send(html);
 });

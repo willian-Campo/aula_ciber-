@@ -20,10 +20,7 @@ const registroTable01 = [
 ];
 
 const registroTable02 = [
-  { coluna01: "c1", coluna02: "d1" },
-  { coluna01: "c2", coluna02: "d2" },
-  { coluna01: "c3", coluna02: "d3" },
-  { coluna01: "c4", coluna02: "d4" },
+
 ];
 
 // Cria as tabelas
