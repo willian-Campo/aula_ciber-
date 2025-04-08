@@ -4,6 +4,7 @@ const { db } = require("./start_sqllite");
 
 const app = express();
 
+const tentativasSucesso = [];
 const tentativas = [];
 const criarConsulta = (coluna01, coluna02) => {
   let query =
@@ -47,10 +48,24 @@ app.get("/sql_inj_1", (req, res) => {
       html += `<tr><td>${row.coluna01}</td><td>${row.coluna02}</td></tr>`;
     }
     html += "</table>";
+
+    if (coluna01 && coluna01.includes("'")) {
+      tentativasSucesso.push(coluna01);
+    }
+    if (coluna02 && coluna02.includes("'")) {
+      tentativasSucesso.push(coluna02);
+    }
   } catch (ex) {
     html += "<h2>Erro</h2>";
     html += `<p>${JSON.stringify(ex)}</p>`;
   }
+
+  html += "<h2 id='titulo'>Tentativas sucesso</h2>";
+  html += "<ul>";
+  for (const tentativa of tentativasSucesso) {
+    html += `<li>${tentativa}</li>`;
+  }
+  html += "</ul>";
 
   html += "<h2 id='titulo'>Tentativas</h2>";
   html += "<ul>";
