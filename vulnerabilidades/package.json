@@ -5,6 +5,8 @@
   "dependencies": {
     "better-sqlite3": "^11.8.1",
     "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
     "express": "^5.1.0",
     "express-fileupload": "^1.5.1",
     "fast-xml-parser": "^5.2.0",

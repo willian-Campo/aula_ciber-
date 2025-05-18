@@ -53,8 +53,8 @@ const tb02 = db
   .all();
 console.log("Conteudo tabela tb02:", tb02);
 
-const tables = db.prepare("SELECT * FROM sqlite_master").all();
-console.log("Tabelas:", tables);
+//const tables = db.prepare("SELECT * FROM sqlite_master").all();
+//console.log("Tabelas:", tables);
 
 module.exports = {
   db,

@@ -1,6 +1,8 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const fileUpload = require('express-fileupload');
+const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 const xss_refletido = require("./xss_refletido");
 const xss_refletido_protecao = require("./xss_refletido_protecao");
@@ -13,10 +15,17 @@ const sql_injection_armazenado = require("./sql_injection_armazenado");
 const xxe = require("./xxe");
 const command_injection = require("./command_injection");
 const path_traversal_armazenado = require("./path_traversal_armazenado");
+const session_set = require("./session_set");
 
 const app = express();
 app.use(bodyParser.urlencoded());
+app.use(cookieParser());
 app.use(fileUpload());
+app.use(
+  cors({
+    credentials: true,
+  })
+);
 
 // XSS
 app.use(xss_refletido);
@@ -39,6 +48,8 @@ app.use(xxe);
 // Path Traversal
 app.use(path_traversal_armazenado);
 
+// SESSION
+app.use(session_set);
 
 const PORT = 8080;
 app.listen(PORT);
