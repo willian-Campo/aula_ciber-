@@ -35,3 +35,17 @@ jobs:
           cd build/ci_cd_projeto/frontend
           npm install
           npm run build
+ empacotar:
+    name: Empacotar
+    needs: [build_back, build_front]
+    runs-on: ubuntu-latest
+    steps:
+     - name: Criar Versão / Release e Tag
+       uses: softprops/action-gh-release@v2
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       with:
+         body: Release
+         tag_name: Release
+         fail_on_unmatched_files: false
+         files: backend.zip,frontend.zip
