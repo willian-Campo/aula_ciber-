@@ -5,7 +5,8 @@ on:
   # inicia o workflow manualmente
   workflow_dispatch:
 jobs:  
-  snapshot:
+ build_back:
+    name: Build Back
     runs-on: ubuntu-latest
     steps:
       - name: Baixando o repositório
@@ -13,9 +14,25 @@ jobs:
         with:
           repository: ${{ github.repository }}
           path: build
-      - name: Exibe conteúda da pasta
+      - name: Compila o(s) projeto(s)
         shell: bash
         run: |
-          cd build
-          ls 
-          ls ci_cd_projeto
+          cd build/ci_cd_projeto/backend
+          npm install
+          npm run build
+
+  build_front:
+    name: Build Front
+    runs-on: ubuntu-latest
+    steps:
+      - name: Baixando o repositório
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          path: build
+      - name: Compila o(s) projeto(s)
+        shell: bash
+        run: |
+          cd build/ci_cd_projeto/frontend
+          npm install
+          npm run build
