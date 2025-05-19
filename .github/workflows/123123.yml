@@ -20,8 +20,7 @@ jobs:
           cd build/ci_cd_projeto/backend
           npm install
           npm run build
-
-  build_front:
+ build_front:
     name: Build Front
     runs-on: ubuntu-latest
     steps:
