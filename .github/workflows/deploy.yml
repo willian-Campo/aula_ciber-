@@ -20,17 +20,17 @@ jobs:
   app_publish:
     runs-on: ubuntu-latest
     steps:
-      - name: willian-Campo/aula_ciber-
+      - name: baixar back-
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          repo: 'rap1986/planner'
+          repo: 'willian-Campo/aula_ciber-'
           version: "tags/${{ github.event.inputs.releasetag }}"
           file: 'backend.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
-      - name: willian-Campo/aula_ciber-
+      - name: baixar front
         uses: dsaltares/fetch-gh-release-asset@master
         with:
-          repo: 'rap1986/planner'
+          repo: 'willian-Campo/aula_ciber-'
           version: "tags/${{ github.event.inputs.releasetag }}"
           file: 'frontend.zip'
           token: ${{ secrets.GITHUB_TOKEN }}
