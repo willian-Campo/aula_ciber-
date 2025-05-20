@@ -1,1 +1,36 @@
+name: Deploy / Atualizar Servidores
+run-name: Deploy do artefato ${{ inputs.releasetag }} em ${{ inputs.ambiente }} disparada por ${{ github.actor }}
 
+on:
+  workflow_dispatch:
+    inputs:
+      releasetag:
+        description: "Nome do artefato/versão"
+        type: string
+        required: true
+      ambiente:
+        type: choice
+        description: 'Ambiente'
+        required: true
+        default: 'TST'
+        options:
+        - TST
+        - PRD
+jobs:
+  app_publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Backend
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: 'rap1986/planner'
+          version: "tags/${{ github.event.inputs.releasetag }}"
+          file: 'backend.zip'
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download Frontend
+        uses: dsaltares/fetch-gh-release-asset@master
+        with:
+          repo: 'rap1986/planner'
+          version: "tags/${{ github.event.inputs.releasetag }}"
+          file: 'frontend.zip'
+          token: ${{ secrets.GITHUB_TOKEN }}
