@@ -20,6 +20,11 @@ jobs:
           cd build/ci_cd_projeto/backend
           npm install
           npm run build
+      - name: Compacta(Zip) buid
+        shell: bash
+        run: |
+          cd build/ci_cd_projeto/backend
+          zip -r backend.zip dist
  build_front:
     name: Build Front
     runs-on: ubuntu-latest
@@ -35,6 +40,12 @@ jobs:
           cd build/ci_cd_projeto/frontend
           npm install
           npm run build
+      - name: Compacta(Zip) buid
+        shell: bash
+        run: |
+          cd build/ci_cd_projeto/frontend
+          zip -r frontend.zip dist
+
  empacotar:
     name: Empacotar
     needs: [build_back, build_front]
