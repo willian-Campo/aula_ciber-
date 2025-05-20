@@ -58,5 +58,5 @@ jobs:
        with:
          body: Release
          tag_name: Release
-         fail_on_unmatched_files: false
+         fail_on_unmatched_files: true
          files: backend.zip,frontend.zip
